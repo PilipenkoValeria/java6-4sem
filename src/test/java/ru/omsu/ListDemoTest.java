@@ -10,7 +10,7 @@ public class ListDemoTest {
     private final Human human1 = new Human("Ivanov", "Alexandr", "Victorovich", 45);
     private final Human human2 = new Human("Shugaev", "Evgeny", "Igorevich", 35);
     private final Human human3 = new Human("Ivanov", "Oleg", "Alexandrovich", 27);
-    private final Human human4 = new Human("Andreev", "Andrey", "Vladimirovich", 27);
+    private final Human human4 = new Human("Andreev", "Andrey", "Vladimirovich", 17);
     private final Human human5 = new Human("Andreev", "Ivan", "Olegovich", 35);
     private final Human human6 = new Human("Ivanov", "Victor", "Alexandrovich", 45);
 
@@ -99,7 +99,7 @@ public class ListDemoTest {
         expected.put(1, 45);
         expected.put(2, 35);
         expected.put(3, 27);
-        expected.put(4, 27);
+        expected.put(4, 17);
         expected.put(5, 35);
         expected.put(6, 45);
         assertEquals(expected, ListDemo.listIdAge(idPeople));
@@ -113,13 +113,16 @@ public class ListDemoTest {
         ArrayList<Human> list1 = new ArrayList<>();
         ArrayList<Human> list2 = new ArrayList<>();
         ArrayList<Human> list3 = new ArrayList<>();
+        ArrayList<Human> list4 = new ArrayList<>();
         Collections.addAll(humans, human1, human2, human3, human4, human5, human6);
         Collections.addAll(list1, human1, human6);
         Collections.addAll(list2, human2, human5);
-        Collections.addAll(list3, human3, human4);
+        Collections.addAll(list3, human3);
+        Collections.addAll(list4,human4);
         expected.put(45, list1);
         expected.put(35, list2);
         expected.put(27, list3);
+        expected.put(17,list4);
         assertEquals(expected, ListDemo.listAgeHuman(humans));
     }
 }
