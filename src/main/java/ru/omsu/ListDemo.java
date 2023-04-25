@@ -6,8 +6,8 @@ public class ListDemo {
     //2)Напишите метода класса ListDemo, который получает на вход список объектов типа Human
     //и еще один объект типа Human. Результат — список однофамильцев заданного человека
     //среди людей из входного списка.
-    public static ArrayList<Human> listOfNamesakes(ArrayList<Human> listOfPeople, Human people) {
-        ArrayList<Human> listOfNamesakes = new ArrayList<>();
+    public static List<Human> listOfNamesakes(List<Human> listOfPeople, Human people) {
+        List<Human> listOfNamesakes = new ArrayList<>();
         for (Human human : listOfPeople) {
             if (human.getSurname().equals(people.getSurname())) {
                 listOfNamesakes.add(human);
@@ -19,11 +19,11 @@ public class ListDemo {
     //3)Вход: список объектов типа Human и еще один объект типа Human. Выход — копия
     //входного списка, не содержащая выделенного человека. При изменении элементов
     //входного списка элементы выходного изменяться не должны.
-    public static ArrayList<Human> listWithoutAPeople(ArrayList<Human> listOfPeople, Human people) {
-        ArrayList<Human> listWithoutAPeople = new ArrayList<>(listOfPeople);
+    public static List<Human> listWithoutAPeople(List<Human> listOfPeople, Human people) {
+        List<Human> listWithoutAPeople = new ArrayList<>();
         for (Human human : listOfPeople) {
-            if (human.equals(people)) {
-                listWithoutAPeople.remove(human);
+            if (!human.equals(people)) {
+                listWithoutAPeople.add(new Human(human));
             }
         }
         return listWithoutAPeople;
@@ -31,8 +31,8 @@ public class ListDemo {
 
     //4)Вход: список множеств целых чисел и еще одно множество. Выход: список всех множеств
     //входного списка, которые не пересекаются с заданным множеством.
-    public static ArrayList<Set<Integer>> disjointSets(ArrayList<Set<Integer>> listOfSets, Set<Integer> set) {
-        ArrayList<Set<Integer>> disjointSets = new ArrayList<>(listOfSets);
+    public static List<Set<Integer>> disjointSets(List<Set<Integer>> listOfSets, Set<Integer> set) {
+        List<Set<Integer>> disjointSets = new ArrayList<>(listOfSets);
         for (Set<Integer> i : listOfSets) {
             if (i.removeAll(set)) {
                 disjointSets.remove(i);
@@ -44,9 +44,9 @@ public class ListDemo {
     //5)Напишите метод класса ListDemo, который получает на вход список, состоящий из
     //объектов типа Human и его производных классов. Результат — множество людей из
     //входного списка с максимальным возрастом.
-    public static Set<Human> listMaxAge(ArrayList<Human> list) {
+    public static Set<Human> listMaxAge(List<Human> list) {
         int maxAge = 0;
-        Set<Human> setMaxAge = new HashSet<Human>();
+        Set<Human> setMaxAge = new HashSet<>();
         for (Human human : list) {
             if (human.getAge() > maxAge) {
                 maxAge = human.getAge();
@@ -77,8 +77,8 @@ public class ListDemo {
 
     //8)Для отображения из задачи 7 постройте список идентификаторов людей, чей возраст не
     //менее 18 лет.
-    public static ArrayList<Integer> listOfAdults(Map<Integer, Human> idPeople) {
-        ArrayList<Integer> id = new ArrayList<>();
+    public static List<Integer> listOfAdults(Map<Integer, Human> idPeople) {
+        List<Integer> id = new ArrayList<>();
         Set<Integer> key = idPeople.keySet();
         for (Integer k : key) {
             if (idPeople.get(k).getAge() >= 18) {
@@ -102,40 +102,14 @@ public class ListDemo {
     //10)По множеству объектов типа Human постройте отображение, которое целому числу
     //(возраст человека) сопоставляет список всех людей данного возраста из входного
     //множества.
-    public static Map<Integer, ArrayList<Human>> listAgeHuman(Set<Human> humans) {
-        Map<Integer, ArrayList<Human>> ageHuman = new HashMap<>();
+    public static Map<Integer, List<Human>> listAgeHuman(Set<Human> humans) {
+        Map<Integer, List<Human>> ageHuman = new HashMap<>();
         for (Human human : humans) {
-            ArrayList<Human> people = new ArrayList<>();
-            if (ageHuman.containsKey(human.getAge())) {
-                people = ageHuman.get(human.getAge());
+            if (!ageHuman.containsKey(human.getAge())) {
+                ageHuman.put(human.getAge(), new ArrayList<>());
             }
-            people.add(human);
-            ageHuman.put(human.getAge(), people);
-
+            ageHuman.get(human.getAge()).add(human);
         }
         return ageHuman;
     }
-
-    /*//11)постройте отображение,которое возрасту сопоставляет новое отображение, которое букве алфавита сопоставляет
-    //список всех людей из входного множества, имеющих данный возраст, и фамилия которых
-    //начинается на эту букву. Т.е.(возраст ->(буква -> <список людей данного возраста с фамилией на эту букву>))
-    //Списки внутри должны быть отсортированы по ФИО по убыванию.
-    public static Map<Integer, Map<Character, ArrayList<Human>>> listAgeCharHuman(Set<Human> humans) {
-        Map<Integer, ArrayList<Human>> mapAgeListHuman = listAgeHuman(humans);
-        Map<Integer, Map<Character, ArrayList<Human>>> result = new HashMap<>();
-        for (int age : mapAgeListHuman.keySet()) {
-            Map<Character, ArrayList<Human>> mapCharListHuman = new HashMap<>();
-            for (Human human : mapAgeListHuman.get(age)) {
-                ArrayList<Human> humanList = new ArrayList<>();
-                char firstLetter = human.getSurname().charAt(0);
-                if (mapCharListHuman.containsKey(firstLetter)) {
-                    humanList = mapCharListHuman.get(firstLetter);
-                }
-                humanList.add(human);
-                mapCharListHuman.put(firstLetter, humanList);
-                result.put(human.getAge(), mapCharListHuman);
-            }
-        }
-        return result;
-    }*/
 }

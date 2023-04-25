@@ -54,7 +54,7 @@ public class Human {
         return surname;
     }
 
-    public void setSurname(String surname) {
+    public void setSurname(final String surname) {
         this.surname = surname;
     }
 
@@ -62,7 +62,7 @@ public class Human {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -70,7 +70,7 @@ public class Human {
         return patronymic;
     }
 
-    public void setPatronymic(String patronymic) {
+    public void setPatronymic(final String patronymic) {
         this.patronymic = patronymic;
     }
 
@@ -78,7 +78,7 @@ public class Human {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(final int age) {
         this.age = age;
     }
 

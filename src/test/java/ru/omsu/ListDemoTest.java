@@ -3,10 +3,11 @@ package ru.omsu;
 import org.junit.Test;
 import java.util.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class ListDemoTest {
     private final ListDemo listDemo = new ListDemo();
-    private final ArrayList<Human> listOfPeople = new ArrayList<>();
+    private final List<Human> listOfPeople = new ArrayList<>();
     private final Human human1 = new Human("Ivanov", "Alexandr", "Victorovich", 45);
     private final Human human2 = new Human("Shugaev", "Evgeny", "Igorevich", 35);
     private final Human human3 = new Human("Ivanov", "Oleg", "Alexandrovich", 27);
@@ -17,7 +18,7 @@ public class ListDemoTest {
 
     @Test
     public void listOfNamesakesTest() {//ex2
-        ArrayList<Human> expected = new ArrayList<>();
+        List<Human> expected = new ArrayList<>();
         Collections.addAll(listOfPeople, human1, human2, human3, human4, human5, human6);
         Collections.addAll(expected, human1, human3, human6);
         assertEquals(expected, ListDemo.listOfNamesakes(listOfPeople, human1));
@@ -25,16 +26,19 @@ public class ListDemoTest {
 
     @Test
     public void listWithoutAPeopleTest() {//ex3
-        ArrayList<Human> expected = new ArrayList<>();
+        List<Human> expected = new ArrayList<>();
         Collections.addAll(listOfPeople, human1, human2, human3, human4, human5, human6);
         Collections.addAll(expected, human2, human3, human4, human5, human6);
-        assertEquals(expected, ListDemo.listWithoutAPeople(listOfPeople, human1));
+        var res = ListDemo.listWithoutAPeople(listOfPeople, human1);
+        assertEquals(expected, res);
+        listOfPeople.get(1).setAge(1000);
+        assertNotEquals(res, ListDemo.listWithoutAPeople(listOfPeople, human1));
     }
 
     @Test
     public void disjointSetsTest() {//ex4
-        ArrayList<Set<Integer>> disjointSets = new ArrayList<>();
-        ArrayList<Set<Integer>> expected = new ArrayList<>();
+        List<Set<Integer>> disjointSets = new ArrayList<>();
+        List<Set<Integer>> expected = new ArrayList<>();
         Set<Integer> set1 = new HashSet<>();
         Set<Integer> set2 = new HashSet<>();
         Set<Integer> set3 = new HashSet<>();
@@ -75,7 +79,7 @@ public class ListDemoTest {
     @Test
     public void listOfAdultsTest() {//ex8
         Map<Integer, Human> idPeople = new HashMap<>();
-        ArrayList<Integer> expected = new ArrayList<>();
+        List<Integer> expected = new ArrayList<>();
         idPeople.put(1, human1);
         idPeople.put(2, human2);
         idPeople.put(3, human3);
@@ -110,19 +114,19 @@ public class ListDemoTest {
     public void testListAgeHuman() { //ex10
         Set<Human> humans = new HashSet<>();
         Map<Integer, ArrayList<Human>> expected = new HashMap<>();
-        ArrayList<Human> list1 = new ArrayList<>();
-        ArrayList<Human> list2 = new ArrayList<>();
-        ArrayList<Human> list3 = new ArrayList<>();
-        ArrayList<Human> list4 = new ArrayList<>();
+        List<Human> list1 = new ArrayList<>();
+        List<Human> list2 = new ArrayList<>();
+        List<Human> list3 = new ArrayList<>();
+        List<Human> list4 = new ArrayList<>();
         Collections.addAll(humans, human1, human2, human3, human4, human5, human6);
         Collections.addAll(list1, human1, human6);
         Collections.addAll(list2, human2, human5);
         Collections.addAll(list3, human3);
         Collections.addAll(list4,human4);
-        expected.put(45, list1);
-        expected.put(35, list2);
-        expected.put(27, list3);
-        expected.put(17,list4);
+        expected.put(45, (ArrayList<Human>) list1);
+        expected.put(35, (ArrayList<Human>) list2);
+        expected.put(27, (ArrayList<Human>) list3);
+        expected.put(17,(ArrayList<Human>) list4);
         assertEquals(expected, ListDemo.listAgeHuman(humans));
     }
 }
